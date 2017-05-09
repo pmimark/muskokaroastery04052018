@@ -1,0 +1,33 @@
+email_notifications_address: info@muskokaroastery.com
+
+site_name: Muskoka Roastery Coffee Co.
+site_url: www.muskokaroastery.com
+
+company_name: Muskoka Roastery Coffee Co.
+company_email: info@muskokaroastery.com
+
+developer_name: Overdrive (Design Limited)
+developer_url: www.overdrivedesign.com
+
+support_name: Muskoka Roastery Support
+support_email: info@muskokaroastery.com
+
+paypal_logo_url: http://www.muskokaroastery.com/images/logo_paypal_mrcc.png
+paypal_return_url: http://www.muskokaroastery.com/shop/thankyou
+paypal_notify_url: http://www.muskokaroastery.com/payment_notifications
+paypal_currency_code: CAD
+paypal_notification_secret: hUe4(*23l)^lkajsdEWu7*23HbdjduwLKJde83b^dfb(3kjh2@
+
+mailing_list_label: include email in mailinglist
+mailing_list_description: If you would like to receive our quarterly e-newsletter, check this box to include your email address in our mailinglist.
+
+# Overdrive's Test Account
+#mailchimp_api_key: bf7a95ee9e757686b453d569462f7efa-us2
+#mailchimp_list_id: 89599ef134
+#mailchimp_list_name: Muskoka Roastery TEST
+
+# Muskoka Roastery Production Account
+#mailchimp_api_key: ae4babd937682eaf2209bf57f8d367c2-us2
+mailchimp_api_key: 60d0a131fd0859d7b4b8647b15ef1fab-us2
+mailchimp_list_id: 5dcd7b239b
+mailchimp_list_name: Muskoka Roastery Coffee Newsletter

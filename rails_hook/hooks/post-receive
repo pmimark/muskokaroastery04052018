@@ -1,0 +1,14 @@
+#!/bin/bash
+while read oldrev newrev ref
+do
+    if [[ $ref =~ .*/master$ ]];
+    then
+        echo "Master ref received.  Deploying master branch to staging..."
+        git --work-tree=/var/app/current --git-dir=/var/app/rails_hook checkout -f
+        cd /var/app/current && bundle install && bundle exec rake db:migrate
+        sudo service passenger restart
+    else
+        echo "Ref $ref successfully received.  Doing nothing: only the master branch may be deployed on this server."
+    fi
+done
+

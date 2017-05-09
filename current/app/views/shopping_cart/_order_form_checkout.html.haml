@@ -1,0 +1,15 @@
+
+= f.hidden_field :name, :value => session[:order][:name]
+= f.hidden_field :company, :value => session[:order][:company]
+= f.hidden_field :email, :value => session[:order][:email]
+= f.hidden_field :address, :value => session[:order][:address]
+= f.hidden_field :address_optional, :value => session[:order][:address_optional]
+= f.hidden_field :city,  :value => session[:order][:city]
+= f.hidden_field :province,  :value =>  session[:order][:province]
+= f.hidden_field :country,  :value =>  session[:order][:order][:country]
+= f.hidden_field :postal, :value =>  session[:order][:postal]
+= f.hidden_field :phone, :value =>  session[:order][:phone]
+= f.hidden_field 'include_in_mailinglist', :value => eval(session[:order][:include_in_mailinglist])[:checked] rescue nil
+= f.hidden_field 'billing_same_as_shipping', :value => eval(session[:order][:billing_same_as_shipping])[:checked] rescue nil
+
+

@@ -1,0 +1,28 @@
+/* The humans responsible & colophon */
+/* humanstxt.org */
+
+/* TEAM */
+  Company: Overdrive (Design Limited)
+  Developer & Designer: Robert McLarty
+  Site: overdrivedesign.com
+  Location: 18 Hook Ave, Toronto, ON, Canada, suite 208
+
+/* THANKS */
+  Jason Gerard
+  Alexander Rosa
+  James Wilson
+  Niilo Atio
+
+/* SITE */
+  Standards: HTML5, CSS3
+  Components: Modernizr, jQuery, Google Maps
+  Software: Ruby on Rails 3, Apache 2, Passenger 3
+
+   :+++    :+++`       `+++++++++:          `/++++/           .-/++++/:.         -++++++++:`        `++++++++:.         //       +/        //`     .++++++++-
+   yMMM`   dMMM-       -NNNNNNMMMy          +MMMMMM/         omNMMNNMMNmy`       oM+///:/+hm/       `My///://ym:        hm       sM:      /No      /Ms/////:.
+   oNMMhoo+NMMM-       `------MMMy         .mMMddMMm`       :MMMd/--:yMMM/       oM`      `hN.      `M+      `Ny        hm       `dm`    .mh`      /M/
+   .yMMNNNNMMMM-        :+++++MMMy         yMMN::MMMo       /MMMs    -MMMo       oM`       oM:      `Mo`````.+No        hm        -Ny    yN-       /My//////`
+   hMMM:---dMMM-        sdddddMMMy        :NMMy  hMMN.      /MMMs    -MMMo       oM`       oM:      `MdyyyyyhNy`        hm         +M/  /N+        /My//////`
+   mMMM-...dMMM-        ......MMMy       `hMMN.  -NMMy      /MMMh....oMMM+       oM`       yN-      `Mo``````oM+        hm          hN..my`        /M/
+   oMMMNNNmMMMM-       `ddddddMMMy       /MMMo    sMMM-     `hNMMNmmNMMMd.       oM-.....-oms       `M+      +My        hm          .mhhm.         /Mo......`
+   `:+syyyyyyyy.       `yyyyyyyyy+       oyys`    .yyy/      `:+syhhhso:`        /hyyyyyyyo:        `h/      :h+        os           :hh:          -hyyyyyyy/

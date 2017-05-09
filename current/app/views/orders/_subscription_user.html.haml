@@ -1,0 +1,77 @@
+/ %link{rel: "stylesheet", href: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"}
+%script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"}
+%script{:src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"}
+%h2 Subscription Status
+%ul.nav.nav-tabs
+	%li.active
+		%a{"data-toggle" => "tab", href: "#act-sub"} Active Subscriptions
+	%li
+		%a{"data-toggle" => "tab", href: "#pen-sub"} Pending Subscriptions
+	%li
+		%a{"data-toggle" => "tab", href: "#can-sub"} Cancelled Subscriptions
+
+.tab-content
+	#act-sub.tab-pane.fade.in.active= render :partial => "subscription_list", :locals => { :subscriptions => @active_subscriptions }
+	#pen-sub.tab-pane.fade= render :partial => "subscription_list", :locals => { :subscriptions => @pending_subscriptions }
+	#can-sub.tab-pane.fade= render :partial => "subscription_list", :locals => { :subscriptions => @cancelled_subscriptions }
+
+:css
+	.nav-tabs {
+		border-bottom: 1px solid #ddd;
+	}
+	.nav-tabs>li {
+		float: left;
+		margin-bottom: -1px;
+	}
+	.nav>li {
+		position: relative;
+		display: block;
+	}
+	.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+		color: #555;
+		cursor: default;
+		background-color: #fff;
+		border: 1px solid #ddd;
+		border-bottom-color: transparent;
+	}
+	.nav-tabs>li>a {
+		margin-right: 2px;
+		line-height: 1.42857143;
+		border: 1px solid transparent;
+		border-radius: 4px 4px 0 0;
+	}
+	.nav>li>a {
+		position: relative;
+		display: block;
+		padding: 10px 15px;
+	}
+	.tab-content{
+		clear: both;
+	}
+	.tab-content>.active {
+		display: block !important;
+	}
+	.tab-content>.tab-pane {
+		display: none;
+	}
+	.fade.in {
+		opacity: 1;
+	}
+	.fade {
+		opacity: 0;
+		-webkit-transition: opacity .15s linear;
+		-o-transition: opacity .15s linear;
+		transition: opacity .15s linear;
+	}
+
+	.nav-tabs>li>a:hover {
+		border-color: #eee #eee #ddd;
+	}
+	.nav>li>a:focus, .nav>li>a:hover {
+		text-decoration: none;
+		background-color: #eee;
+	}
+	ol, ul {
+		margin-top: 0;
+		margin-bottom: 10px;
+	}

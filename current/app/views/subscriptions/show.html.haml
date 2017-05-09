@@ -1,0 +1,103 @@
+- content_for :title do
+  Showing Order
+
+%p
+  Ordered by
+  %b= @subscription.order.name
+  - unless @subscription.order.company.blank?
+    %br
+    = @subscription.order.company
+%p
+  Status:
+  %b= @subscription.status
+%p
+  Ordered on:
+  %b= @subscription.order.created_at.strftime("%e %B %Y @%l:%M%P")
+  %br
+  Purchased on:
+  %b= @subscription.order.purchased_at.strftime("%e %B %Y @%l:%M%P") unless @subscription.order.purchased_at.blank?
+
+%h2 Line Items
+%table.admin
+  %tr
+    %th Product
+    %th Qty
+    %th{ :align => "right" } Unit Price
+    %th{ :align => "right" } Subtotal
+  - @subscription.order.line_items.each do |line_item|
+    %tr{ :class => "#{ cycle("even", "odd") }" }
+      %td
+        = line_item.product.name
+        = "(#{ line_item.item_option })"
+        - unless line_item.item_flavour.blank?
+          = "- #{ line_item.item_flavour }"
+      %td= line_item.quantity
+      %td{ :align => "right" }= number_to_currency line_item.item_price
+      %td{ :align => "right" }= number_to_currency line_item.full_price
+  %tr{ :class => "odd", :style => "border-top: 1px dotted #e0c298" }
+    %td Subtotal
+    %td{ :colspan => 3, :align => "right" }
+      - if @subscription.order.subtotal.blank? || @subscription.order.subtotal == 0
+        = number_to_currency @subscription.order.total_price
+      - else
+        = number_to_currency @subscription.order.subtotal
+  %tr{ :class => "odd" }
+    %td 
+      Shipping Rate
+      = "(#{ @shipping_rate.name })"
+    %td{ :colspan => 3, :align => "right" }
+      - if @subscription.order.shipping_fees.blank? || @subscription.order.shipping_fees == 0
+        = number_to_currency @shipping_rate.price
+      - else
+        = number_to_currency @subscription.order.shipping_fees
+  %tr{ :class => "odd", :style => "border-top: 1px dotted #e0c298" }
+    %td Total
+    %td{ :colspan => 3, :align => "right" }
+      - if @subscription.order.subtotal.blank? || @subscription.order.subtotal == 0 || @subscription.order.shipping_fees.blank? || @subscription.order.shipping_fees == 0
+        %b= number_to_currency (@subscription.order.total_price + @shipping_rate.price)
+      - else
+        %b= number_to_currency @subscription.order.total
+%br
+%h2 Billing Address
+%p
+  = @subscription.order.address
+  = ", " + @subscription.order.address_optional unless @subscription.order.address_optional.blank?
+  %br
+  = @subscription.order.city + ", " + @subscription.order.province
+  %br
+  = @subscription.order.country
+  %br
+  = @subscription.order.postal
+%p
+  = @subscription.order.phone
+  %br
+  = link_to @subscription.order.email, "mailto:#{ @subscription.order.email }"
+%br
+
+- if @subscription.order.billing_same_as_shipping
+  %b (shipping address is the same as billing address)
+- else
+  %h2 Shipping Address
+  %p
+    = @subscription.order.shipping_name
+    %br
+    = @subscription.order.shipping_address
+    = ", " + @subscription.order.shipping_address_optional unless @subscription.order.shipping_address_optional.blank?
+    %br
+    = @subscription.order.shipping_city + ", " + @subscription.order.shipping_province
+    %br
+    = @subscription.order.shipping_country
+    %br
+    = @subscription.order.shipping_postal
+  %p
+    = @subscription.order.shipping_phone
+%br
+- unless @subscription.order.shipping_notes.blank?
+  %p
+    Shipping Notes:
+    %br
+    = @subscription.order.shipping_notes
+
+- content_for :sidebar do
+  %p= link_to 'Edit Order', edit_subscription_path(@subscription), :class => "feature-button"
+  %p= link_to 'Back', subscriptions_path

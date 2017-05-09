@@ -1,0 +1,6 @@
+paypal_url: https://www.paypal.com/cgi-bin/webscr
+paypal_email: orderdesk@muskokaroastery.com
+paypal_cert_id: WJRNCS58SCALQ
+paypal_logo_url: http://www.muskokaroastery.com:9001/images/logo_paypal_mrcc.png
+paypal_return_url: http://www.muskokaroastery.com:9001/shop/thankyou
+paypal_notify_url: http://www.muskokaroastery.com:9001/payment_notifications

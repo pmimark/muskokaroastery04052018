@@ -1,0 +1,40 @@
+- if item.as_json['subscription'] != "none"
+  %h2.subscription_text Subscription Items 
+  %span.itemName
+    = item.as_json['subscription']['subscription_name']
+  .shopping-cart-item-name
+    %h3= link_to item.product.name, shop_product_path(item.product.slug)
+    - unless item.flavour == "none"
+      %b= item.flavour.titleize
+  .left.thumbnail
+    = link_to image_tag(item.product.photo.url(:shopping_cart), :size => '40x40', :alt => item.product.name), shop_product_path(item.product.slug)
+  .right.info
+    = item.option.titleize
+    %br
+    = "#{ number_to_currency item.unit_price } #{ item.product.per }"
+    %br
+    .shopping-cart-item-quantity.clearfix
+      .left
+        Qty
+        %input{ :type => "text", :size => 2, :name => "items[#{ item.item_id }]", class:"qty_review", :id => item.item_id, :value => item.quantity }
+      .right
+        = number_to_currency item.price
+- else
+  %h2.subscription_text Additional Items
+  .shopping-cart-item-name
+    %h3= link_to item.product.name, shop_product_path(item.product.slug)
+    - unless item.flavour == "none"
+      %b= item.flavour.titleize
+  .left.thumbnail
+    = link_to image_tag(item.product.photo.url(:shopping_cart), :size => '40x40', :alt => item.product.name), shop_product_path(item.product.slug)
+  .right.info
+    = item.option.titleize
+    %br
+    = "#{ number_to_currency item.unit_price } #{ item.product.per }"
+    %br
+    .shopping-cart-item-quantity.clearfix
+      .left
+        Qty
+        %input{ :type => "text", :size => 2, :name => "items[#{ item.item_id }]",class:"qty_review", :id => item.item_id, :value => item.quantity }
+      .right
+        = number_to_currency item.price

@@ -1,0 +1,64 @@
+#order-review
+	- if subscriptions.present?
+		- subscriptions.each do |subscription|
+			%table.review1
+				%tr
+					%td
+						Subscription Name:
+						%p.black.name= subscription.name
+					%td
+						Shipping Every:
+						%p.black
+							- case subscription.period
+								- when 7
+									Week
+								- when 14
+									2 Week
+								- when 21
+									3 Week
+								- when 28
+									4 Week
+								- when 35
+									5 Week
+								- when 42
+									6 Week
+								- when 49
+									7 Week
+								- when 56
+									8 Week
+								- when 63
+									9 Week
+					%td
+						Starting on:
+						%p.black.date= subscription.effective_date.strftime("%d %b %Y")
+					%td
+						Subtotal:
+						%p.black.date= number_to_currency subscription.order.total
+					%td= link_to 'Show', "subscriptions/#{subscription.id}"
+					%td= link_to 'Edit', edit_subscription_path(subscription)
+					- if subscription.status != "Cancelled"
+						%td= link_to 'Cancel', "subscriptions/#{subscription.id}", data: {:confirm => 'Are you sure?'}, :method => :delete
+				%hr.hr_mrg_0
+				%table
+					%tr.no-border
+						%th{colspan: 2}
+							%h3 Product
+						%th
+							%h3 Quantity
+						%th{style: "text-align: right"}
+							%h3 Item Price
+					- subscription.order.line_items.each_with_index do |lineitem, index|
+						%tr= render :partial => "order_review_item", :locals => { :lineitem => lineitem }
+					- if @cart.promo_discount > 0
+						%tr#cart-subtotal
+							%td.label{ :colspan => 4 } Subtotal
+							%td.subtotal
+								%h3#order-review-subtotal-price = number_to_currency @cart.subtotal
+						%tr#cart-subtotal
+							%td.label{ :colspan => 4 } Discount
+							%td.subtotal
+								%h3#order-review-subtotal-price = number_to_currency @cart.promo_discount_price
+	- else
+		%p
+			%b You don't have these subscriptions.
+			= raw "#{ link_to "Go back to our portfolio", products_path }."

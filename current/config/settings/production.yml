@@ -1,0 +1,6 @@
+paypal_url: https://www.paypal.com/cgi-bin/webscr
+paypal_email: orderdesk@muskokaroastery.com
+#paypal_cert_id: WJRNCS58SCALQ
+#paypal_cert_id: S7846LSDUXBQA
+#paypal_cert_id: CBK9K3WG46PE6 # Expires Oct 30, 2016
+paypal_cert_id: TTXFM3MX2953L # Expires 2 Nov 2017 

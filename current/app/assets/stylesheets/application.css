@@ -1,0 +1,89 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require reset
+ *= require fonts
+ *= require ion-icons
+ *= require main
+ *= require carousal/asAccordion
+ *= require carousal/font-awesome.min
+ *= require carousal/custom_style
+ *= require carousal/jquery.mCustomScrollbar
+ *= require_self
+ */
+
+.facebook_sec{
+  padding-left: 13% !important;
+}
+.black{color:black !important;display: inline;font-weight: bold;}
+.review1{
+	    margin: 20px 0 9px 0 !important;
+}
+.hr_mrg_0{margin-bottom: -20px !important;}
+
+.start_subscription {
+        background: #d9c8ad none repeat scroll 0 0;
+        overflow: hidden;
+        padding: 15px 12px;
+        border: 1px solid #7c351f;
+        display: block;
+    }
+.roast-img {
+        margin: 15px 0;
+        background: #e3d7c4;
+        text-align: center;
+        padding: 8px;
+    }
+.choose_btn {
+        width: 100%;
+        background: #7c351f;
+        font-size: 18px;
+        color: #f7f0e6 !important;
+        text-align: center;
+        padding: 6px 0;
+        display: block;
+        margin: 3px 0 0;
+        font-family: MuskokaRoastery, Arial, Helvetica, "Helvetica Neue", sans-serif;
+    }
+.width_right_content{
+	width:190px;
+}
+.width_right_btn{
+	 width: 216px;
+}
+.img_width{
+	width: 9px !important;
+    margin-left: 10px !important;
+
+}
+
+.btn_checkout{
+    display: inline-block;
+    float:left;
+    width: 160px;
+    height: 30px;
+    padding: 10px 20px 2px 20px;
+    margin: 0;
+    border: none;
+    -webkit-box-shadow: none;
+    text-align: left;
+    font-family: MuskokaRoastery, Arial, Helvetica, "Helvetica Neue", sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    text-transform: uppercase;
+    line-height: 18px;
+    background-color: #7c351f;
+    color: #ba6951 !important;
+    cursor: pointer;
+    -webkit-appearance: none;
+    text-decoration: none !important;
+  }

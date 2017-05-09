@@ -1,0 +1,72 @@
+.field
+  .label
+    = label_tag :name, "Name"
+    .hint Your full name.
+  .input
+    = text_field_tag :name, nil, :placeholder => "John Smith"
+  .error
+.field
+  .label
+    = label_tag :company, "Company Name"
+    .optional (optional)
+    .hint If you are ordering for a business.
+  .input
+    = text_field_tag :company, nil, :placeholder => "Acme Corp."
+  .error
+.field
+  .label
+    = label_tag :email, "Email Address"
+    .hint If we need to contact you.
+  .input
+    = text_field_tag :email, nil, :placeholder => "johnsmith@yourdomain.com"
+  .error
+.field
+  .label
+    = label_tag :address, "Street Address"
+    .hint Where your bills are delivered.
+  .input
+    = text_field_tag :address, nil, :placeholder => "123 Main Street"
+  .error
+.field
+  .label
+    = label_tag :address_optional, "Apt., Suite, Bldg."
+    .optional (optional)
+    .hint Or any special instructions.
+  .input
+    = text_field_tag :address_optional,  nil,:placeholder => "Apt. #345, South Bldg."
+  .error
+.field
+  .label
+    = label_tag :city
+    .hint Where you live.
+  .input
+    = text_field_tag :city,nil, :placeholder => "Toronto"
+  .error
+.field
+  .label
+    = label_tag :province
+    .hint Province, State, Territory, County.
+  .input
+    = text_field_tag :province, nil, :placeholder => "Ontario"
+  .error
+.field
+  .label
+    = label_tag :country
+    .hint Where you are in the world.
+  .input
+    = country_select "order", "country", ["Canada", "United States"] # Default value for this field is set in the controller on the @order model to make this work.
+  .error
+.field
+  .label
+    = label_tag :postal, "Postal Code"
+    .hint Post Code or ZIP
+  .input
+    = text_field_tag :postal, nil, :placeholder => "M6G 3B2"
+  .error
+.field
+  .label
+    = label_tag :phone, "Telephone Number"
+    .hint Only used in case of delivery issues.
+  .input
+    = text_field_tag :phone, nil, :placeholder => "416.123.4567"
+  .error

@@ -1,0 +1,272 @@
+- if @cart && @cart.items.size > 0
+  = render :partial => "shopping_cart/discount_form"
+  - if @cart.items.first.as_json['subscription'] != "none" || @cart.items.last.as_json['subscription'] != "none"
+    = form_tag order_review_update_totals_path, :remote => true, :class => "shop-form order-review", :id => "order-review-form" do
+      %br
+      %br
+      %br
+      %h2 Subscription Items
+      %hr.hr_mrg_0
+      %table.review1
+        - @cart.items.each do |item|
+          - if item.as_json["subscription"]["subscription_name"] == @name
+            %tr.no-border
+              %th{ :colspan => 2 }
+                %h3 Product
+              %th
+                %h3 Quantity
+              %th{ :style => "text-align: right" }
+                %h3 Unit Price
+              %th{ :style => "text-align: right" }
+                %h3 Subtotal
+
+              - if item.as_json['subscription'] != "none"
+                %tr{ :id => "cart-#{ item.item_id }" }
+                  = render :partial => "shopping_cart/order_review_item", :locals => { :item => item }
+              - if @cart.promo_discount > 0
+                %tr#cart-subtotal
+                  %td.label{ :colspan => 4 } Subtotal
+                  %td.subtotal
+                    %h3#order-review-subtotal-price= number_to_currency @cart.subtotal
+                %tr#cart-subtotal
+                  %td.label{ :colspan => 4 } Discount
+                  %td.subtotal
+                    %h3#order-review-subtotal-price
+                      = "(#{ number_to_currency @cart.promo_discount_price })"
+          - else
+            - if item.as_json["subscription"] != "none"
+              - @name = item.as_json["subscription"]["subscription_name"]
+              %tr{ :id => "cart-#{ item.item_id }" }
+                
+                %input{type:"hidden", name: "product_id", :value=> "#{item.product.id}" }
+                %td{ :colspan => 2 }
+                  %h6   
+                  Subscription Name: 
+                  %p.black.name
+                    = item.as_json['subscription']['subscription_name']
+                  |
+                  %a{ id:"sname", :href => "javascript:void(0)"} Edit
+                  %a{ :href => "javascript:void(0)", id:"update", style: "display:none;", onclick: "$('#order-review-form').submit();"} Update
+                %td{ :colspan => 2 }
+                  %h6 
+                  Shipping Every:
+                  %p.black
+                    - case item.as_json['subscription']['subscription_period'].to_i
+                      - when 7
+                        Week
+                      - when 14
+                        2 Week
+                      - when 21
+                        3 Week
+                      - when 28
+                        4 Week
+                      - when 35
+                        5 Week
+                      - when 42
+                        6 Week
+                      - when 49
+                        7 Week
+                      - when 56
+                        8 Week
+                      - when 63
+                        9 Week 
+                  |
+                  %a{ id: "select_week", :href => "javascript:void(0)", :title => "Popover Header", "data-toggle"=>"modal", "data-target"=>"#myModal"} Edit
+                  #myModal.modal.fade{:role => "dialog"}
+                    .modal-dialog
+                      .modal-content
+                        .modal-header
+                          %button.close{"data-dismiss" => "modal", :type => "button"} ×
+                          %h4.modal-title 
+                        .modal-body
+                        .subscription-field-frequency
+                          %div.form-control
+                            %label.label.required{:for => "subscription_period"} Choose your frequency
+                            %select{id: "select_week",:name => "subscription_data[subscription_period]", onchange:"$('#order-review-form').submit();"}
+                              %option{:value => ""} Select Your Frequency
+                              %option{:value => "7"} Every Week
+                              %option{:value => "14"} Every 2 Weeks
+                              %option{:value => "21"} Every 3 Weeks
+                              %option{:value => "28"} Every 4 Weeks
+                              %option{:value => "42"} Every 6 Weeks
+                              %option{:value => "56"} Every 8 Weeks
+                              %option{:value => "63"} Every 9 Weeks
+                         
+                   
+                %td{ :colspan => 2 }
+                  %h6
+                  Starting on:
+                  %p.black.date 
+                    = item.as_json['subscription']['subscription_date'].to_date rescue nil
+                  |
+                  %a{ :href => "javascript:void(0)", :id=>"subsc_date"} Edit
+                  %a{ :href => "javascript:void(0)", id:"update_date", style: "display:none;", onclick: "$('#order-review-form').submit();"} Update
+               
+
+              %tr.no-border
+                %th{ :colspan => 2 }
+                  %h3 Product
+                %th
+                  %h3 Quantity
+                %th{ :style => "text-align: right" }
+                  %h3 Unit Price
+                %th{ :style => "text-align: right" }
+                  %h3 Subtotal
+
+                - if item.as_json['subscription'] != "none"
+                  %tr{ :id => "cart-#{ item.item_id }" }
+                    = render :partial => "shopping_cart/order_review_item", :locals => { :item => item }
+                - if @cart.promo_discount > 0
+                  %tr#cart-subtotal
+                    %td.label{ :colspan => 4 } Subtotal
+                    %td.subtotal
+                      %h3#order-review-subtotal-price= number_to_currency @cart.subtotal
+                  %tr#cart-subtotal
+                    %td.label{ :colspan => 4 } Discount
+                    %td.subtotal
+                      %h3#order-review-subtotal-price
+                        = "(#{ number_to_currency @cart.promo_discount_price })"   
+            - else
+              - break 
+      
+
+        -# %tr#cart-subtotal
+        -#   %td.label{ :colspan => 4 } Subtotal
+        -#   %td.subtotal
+        -#     %h3#order-review-subtotal-price= number_to_currency @cart.subtotal
+        -# %tr#cart-shipping
+        -#   %td.label{ :colspan => 4 }
+        -#     Estimated Shipping
+        -#     = "(#{ @estimated_country } Rate)"
+        -#   %td.subtotal
+        -#     %h3#order-review-shipping-price= number_to_currency @estimated_shipping_fees
+        -# %tr#cart-total
+        -#  %td.label{ :colspan => 4 }
+        -#  %h3 Total
+        -#    %td.subtotal
+            -# %h2#order-review-total-price= number_to_currency @cart.total_price + @estimated_shipping_fees
+            -#%h2#order-review-total-price= number_to_currency @cart.total_price
+        -# = submit_tag "update totals", :id => "order-review-button"
+        -# .loading
+        -#   Updating. Please wait.
+        -# %tr#cart-subtotal
+        -#   %td.label{ :colspan => 4 }
+        -#     = link_to "Shipping Rates", "/company/shipping-rates"
+        -#     %br
+        -#     Canada
+        -#     %br
+        -#     United States
+        -#     %br
+        -#     International
+        -#   %td.subtotal
+        -#     %br
+        -#     = number_to_currency ShippingRate.where(:country_code => "CA").first.price
+        -#     %br
+        -#     = number_to_currency ShippingRate.where(:country_code => "US").first.price
+        -#     %br
+        -#     = number_to_currency ShippingRate.where(:country_code => "INT").first.price
+        -#     = "/ #{ DynamicSetting.find_by_name("shipping_rate_multiple").value } lb"
+        -#     %br
+  - @cart.items.each do |item|
+    - if item.as_json['subscription'] == "none"
+      = form_tag order_review_update_totals_path, :remote => true, :class => "shop-form order-review", :id => "order-review-form" do
+        %hr
+        %h2 Additional Items
+        %hr.hr_mrg_0
+        %table
+          %tr.no-border
+            %th{ :colspan => 2 }
+              %h3 Product
+            %th
+              %h3 Quantity
+            %th{ :style => "text-align: right" }
+              %h3 Unit Price
+            %th{ :style => "text-align: right" }
+              %h3 Subtotal
+
+          - @cart.items.each do |item|
+            - if item.as_json['subscription'] == "none"
+              %tr{ :id => "cart-#{ item.item_id }" }
+                = render :partial => "shopping_cart/order_review_item", :locals => { :item => item }
+          - if @cart.promo_discount > 0
+            %tr#cart-subtotal
+              %td.label{ :colspan => 4 } Subtotal
+              %td.subtotal
+                %h3#order-review-subtotal-price= number_to_currency @cart.subtotal
+            %tr#cart-subtotal
+              %td.label{ :colspan => 4 } Discount
+              %td.subtotal
+                %h3#order-review-subtotal-price
+                  = "(#{ number_to_currency @cart.promo_discount_price })"
+
+          -# %tr#cart-subtotal
+          -#   %td.label{ :colspan => 4 } Subtotal
+          -#   %td.subtotal
+          -#     %h3#order-review-subtotal-price= number_to_currency @cart.subtotal
+          -# %tr#cart-shipping
+          -#   %td.label{ :colspan => 4 }
+          -#     Estimated Shipping
+          -#     = "(#{ @estimated_country } Rate)"
+          -#   %td.subtotal
+          -#     %h3#order-review-shipping-price= number_to_currency @estimated_shipping_fees
+          %tr#cart-total
+            %td.label{ :colspan => 4 }
+              %h3 Total
+            %td.subtotal
+              -# %h2#order-review-total-price= number_to_currency @cart.total_price + @estimated_shipping_fees
+              %h2#order-review-total-price= number_to_currency @cart.total_price
+              = submit_tag "update totals", :id => "order-review-button"
+              .loading
+                Updating. Please wait.
+          -# %tr#cart-subtotal
+          -#   %td.label{ :colspan => 4 }
+          -#     = link_to "Shipping Rates", "/company/shipping-rates"
+          -#     %br
+          -#     Canada
+          -#     %br
+          -#     United States
+          -#     %br
+          -#     International
+          -#   %td.subtotal
+          -#     %br
+          -#     = number_to_currency ShippingRate.where(:country_code => "CA").first.price
+          -#     %br
+          -#     = number_to_currency ShippingRate.where(:country_code => "US").first.price
+          -#     %br
+          -#     = number_to_currency ShippingRate.where(:country_code => "INT").first.price
+          -#     = "/ #{ DynamicSetting.find_by_name("shipping_rate_multiple").value } lb"
+          -#     %br      
+- else
+  %p
+    %b Your shopping cart is currently empty.
+    =raw "#{ link_to "Go back to our portfolio", products_path }."
+    %br
+    %br
+%script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"}
+%script{:src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"}
+
+:javascript  
+  $(document).ready(function(){
+    $("#sname").click(function(){
+      $("p.black.name").html('<input type="text" name="subscription_data[subscription_name]">');
+      $("#sname").hide();
+      $("#update").show();
+    });
+  });
+  $("#subsc_date").click(function(){
+    $("p.black.date").html('<input type="date" name="subscription_data[subscription_date]">');
+    $("#subsc_date").hide();
+    $("#update_date").show();
+  });
+:css
+  .modal-content{
+      width: 22% !important;
+      height: 72px !important;
+      margin-left: 39%;
+      margin-top: 0% !important;
+  }
+  #select_week{
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 100 !important;
+  }

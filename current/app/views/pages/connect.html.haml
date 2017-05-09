@@ -1,0 +1,106 @@
+%section.connect_section
+  .connect_cafe_container
+    %h2 Stay Connected
+    .connect_social
+      %ul
+        %li
+          %a{:href => "https://www.facebook.com/MuskokaRoastery", :target => "_blank", :title => ""}
+            %i.fa.fa-facebook{"aria-hidden" => "true"}
+        %li
+          %a{:href => "https://twitter.com/MuskokaRoastery", :target => "_blank", :title => ""}
+            %i.fa.fa-twitter{"aria-hidden" => "true"}
+        %li
+          %a{:href => "https://www.instagram.com/muskokaroastery", :target => "_blank", :title => ""}
+            %i.fa.fa-instagram{"aria-hidden" => "true"}
+    .example
+      %ul.-accordion.-accordion--box.-accordion--horizontal{"data-direction" => "horizontal", "data-event" => "click", "data-initial-index" => "0"}
+        %li.-accordion__panel
+          %span.-accordion__heading
+            %i.fa.fa-instagram{"aria-hidden" => "true"}>
+            Instagram
+          .-accordion__expander
+            .instagram_bx_main
+              .instagram_bx
+                / LightWidget WIDGET
+                %script{:src => "//lightwidget.com/widgets/lightwidget.js"}
+                %iframe.lightwidget-widget{:allowtransparency => "true", :scrolling => "no", :src => "//lightwidget.com/widgets/1bc068155a4d5cfd800541a9d3cd6dec.html", :style => "width: 100%; border: 0; overflow: hidden;"}
+        / instagram_bx end
+        %li.-accordion__panel
+          %span.-accordion__heading
+            %i.fa.fa-facebook{"aria-hidden" => "true"}
+            Facebook
+          .-accordion__expander
+            .facebook_sec
+              .fb-page{"data-adapt-container-width" => "true", "data-height" => "4650", "data-hide-cover" => "true", "data-href" => "https://www.facebook.com/MuskokaRoastery", "data-show-facepile" => "false", "data-small-header" => "false", "data-tabs" => "timeline", "data-width" => "500"}
+                %blockquote.fb-xfbml-parse-ignore{:cite => "https://www.facebook.com/MuskokaRoastery"}
+                  %a{:href => "https://www.facebook.com/MuskokaRoastery"} Muskoka Roastery Coffee Co.
+        / facebook_bx end
+        %li.-accordion__panel
+          %span.-accordion__heading
+            %i.fa.fa-twitter{"aria-hidden" => "true"}>
+            Twitter
+          Twitter
+          .-accordion__expander
+            .twitter_main_sec
+              %a.twitter-timeline{:href => "https://twitter.com/MuskokaRoastery"} Tweets by MuskokaRoastery
+              %script{:charset => "utf-8", :src => "//platform.twitter.com/widgets.js"}
+              / twitter_bx end
+%script{:src => "//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"}
+- content_for :scripts do
+  = javascript_include_tag :connect_carousal
+/ script for fb page
+#fb-root
+:javascript
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=364959810298294";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+/ script for fb page ends
+/ owl carousel
+:javascript
+  jQuery(document).ready(function(){
+    jQuery(".-accordion__panel>span").each(function(){
+      jQuery(this).click(function(event){
+        if(jQuery(this).parent().hasClass("-accordion--active")) {
+          console.log("right event");
+          event.preventDefault();
+          event.stopImmediatePropagation();
+        } 
+      });
+    });
+  });
+:javascript
+  jQuery(document).ready(function () {
+    var owl = jQuery("#owl-demo");
+    owl.owlCarousel({
+      itemsCustom: [
+        [320, 1]
+        , [480, 3]
+        , [1200, 4]
+        , [1500, 4]]
+      , navigation: true
+      , slideSpeed: 1000
+      , autoPlay: true
+      , scrollPerPage: true
+    });
+  });
+:javascript
+  jQuery(document).ready(function () {
+    jQuery('.-accordion').asAccordion({
+      namespace: '-accordion'
+    });
+  });
+/ custom scrollbar plugin
+- content_for :javascript_includes do
+  = javascript_include_tag "jquery.mCustomScrollbar.concat.min.js"
+:javascript
+  (function ($) {
+    $(window).on("load", function () {
+      $(".-accordion__expander").mCustomScrollbar({
+        theme: "minimal-dark"
+      });
+    });
+  })(jQuery);

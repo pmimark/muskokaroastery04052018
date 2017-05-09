@@ -1,0 +1,158 @@
+.homepage
+  #flash
+  %section#main.clearfix.subscription_section
+    %h1 SUBSCRIPTION BENEFITS
+    .benfit_area
+      .benefit_img
+        .lft
+          %h1 our freshest coffee, right to your door, just when you need it.
+          %a{href: "/shop"} GET STARTED
+        .rght
+          %img{src: "images/subsciption_page_img.png"}
+      %ul
+        %li
+          %h2 Ultimate Freshness
+          %p Your order will be picked from our latest handcrafted roast, to ensure that your coffee is the very best that we offer.
+        %li
+          %h2 Convenience & Flexibility
+          %p Change your standard order or delivery frequency at any time, and know that your coffee is coming straight to your door.
+        %li
+          %h2 10% Savings
+          %p Enjoy a 10% saving on all Muskoka Roastery subscription orders, as a reward for your loyalty.
+      %h3 Build your subscription by selecting your favourite roasts from our online store.
+      %a{href: "/shop"} START BUILDING
+      %a{href: "#"} HAVE QUESTIONS?
+
+:css
+  .subscription_section h1{text-transform: uppercase !important;}  
+  .benefit_img{
+    background: #f6ead8 !important;
+    padding: 45px 30px 25px !important;
+    text-align: center !important;
+    overflow: hidden !important;
+    width:100% !important;
+  }
+  .subscription_section .lft > h1{
+    font-size: 38px !important;
+    text-align: left !important;
+    line-height: 65px !important;
+  }
+  .lft{
+    float: left !important;
+    width: 60% !important;
+  }
+  .rght{
+    float: right !important;
+    width: 40% !important;
+  }
+  .rght > img{
+    width: 100% !important;
+  }
+  .benfit_area h3{
+    font-size: 20px !important;
+    margin: 40px 0 20px !important;
+    line-height: 1.6 !important;
+  }
+  .benfit_area ul{
+    overflow: hidden !important;
+    margin: 50px 0 30px !important;
+    padding: 0 !important;
+  }
+  .benfit_area ul li{
+    background: #ebddc8 none repeat scroll 0 0 !important;
+    border-bottom: 8px solid #4d351d !important;
+    float: left !important;
+    list-style: outside none none !important;
+    margin: 0 13px 0 0 !important;
+    padding: 35px 25px 35px 35px !important;
+    width: 25.87% !important;
+    min-height: 172px !important;
+  }
+  .benfit_area li:last-child{
+    margin: 0 !important;
+  }
+  .benfit_area ul li h2{
+    margin: 0 0 16px !important;
+    padding: 0 0 16px !important;
+    position: relative !important;
+    min-height: 45px !important;
+  }
+  .benfit_area ul li h2:after{
+    background: #cabaa2 !important;
+    position: absolute !important;
+    content: "" !important;
+    width: 100% !important;
+    height: 1px !important;
+    bottom: 0 !important;
+    left: 0 !important;
+  }
+  .benfit_area ul li p{
+    line-height: 2;
+  }  
+  .benfit_area a{
+    font-size: 18px !important;
+    text-transform: uppercase !important;
+    color: #ba6951 !important;
+    background: #7c351f !important;
+    padding: 0px 20px 2px 20px !important;
+    display: inline-block !important;
+    transition: all 0.3s ease-in-out !important;
+    -webkit-transition: all 0.3s ease-in-out !important;
+    -ms-transition: all 0.3s ease-in-out !important;
+    font-family: MuskokaRoastery, Arial, Helvetica, "Helvetica Neue", sans-serif;
+    height:40px;
+    vertical-align: middle;
+    line-height: 40px;
+  }
+  .benfit_area a:hover,
+  .benfit_area a:focus{
+    background-color: #e0c298 !important;
+    color: #4d351d !important;
+    text-decoration: none !important;
+  }
+  div.homepage #sidebar{
+    border: 0 none !important;
+  }
+  .start_subscription{
+    background: #d9c8ad none repeat scroll 0 0 !important;
+    overflow: hidden !important;
+    padding: 15px 12px !important;
+    border: 1px solid #7c351f !important;
+    display: block !important;
+  }
+  #sidebar{
+    float: right !important;
+    padding: 10px 0 10px 10px !important;
+    width: 210px !important;
+    overflow: hidden !important;
+  }
+  div.homepage {
+    padding-right: 20px !important;
+    margin-top: -30% !important;
+  }
+  .roast-img{
+    margin: 15px 0 !important;
+    background: #e3d7c4 !important;
+    text-align: center !important;
+    padding: 8px !important;
+  }
+  .start_subscription p{
+    color: #4d351d !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+  }
+  .choose_btn{
+    width: 100% !important;
+    background: #7c351f !important;
+    font-size: 18px !important;
+    color: #f7f0e6 !important !important;
+    text-align: center !important;
+    padding: 6px 0 !important;
+    display: block !important;
+    margin: 3px 0 0 !important;
+  }
+  .choose_btn>i img{
+    float: right !important;
+    margin: 3px 12px 0 0 !important;
+    width: 9px !important;
+  }

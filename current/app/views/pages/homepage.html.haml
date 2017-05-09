@@ -1,0 +1,50 @@
+- @is_homepage = true
+
+- content_for :title do
+  =link_to "#{@homepage_title}", '/shop/category/compostable-pods'
+- if current_user and current_user.is_admin?
+  %p= link_to "Edit Title", edit_homepage_title_pages_path
+
+.clearfix.product-list-top
+  
+  .feature-left
+    - feature = Feature.homepage_middle2
+    = link_to image_tag(feature.photo.url(:featured), :border => 0, class: 'feature-image'), feature.link_url
+    %h2= link_to "#{feature.name}", feature.link_url
+    %p= feature.body
+    = link_to feature.link_name, feature.link_url, :class => "feature-button"
+    - if current_user and current_user.is_admin?
+      %hr
+      %p= link_to "Edit", edit_middle_features_path
+  .feature-middle
+    - feature = Feature.homepage_middle
+    = link_to image_tag(feature.photo.url(:featured), :border => 0, class: 'feature-image'), feature.link_url
+    %h2= link_to "#{feature.name}", feature.link_url
+    %p= feature.body
+    = link_to feature.link_name, feature.link_url, :class => "feature-button"
+    - if current_user and current_user.is_admin?
+      %hr
+      %p= link_to "Edit", edit_middle_features_path
+  .feature-middle
+    - feature = Feature.homepage_middle3
+    = link_to image_tag(feature.photo.url(:featured), :border => 0, class: 'feature-image'), feature.link_url
+    
+    %h2= link_to "#{feature.name}", feature.link_url
+    %p= feature.body
+    = link_to feature.link_name, feature.link_url, :class => "feature-button"
+    - if current_user and current_user.is_admin?
+      %hr
+      %p= link_to "Edit", edit_right_features_path
+  .feature-right
+    - feature = Feature.homepage_left
+    = link_to image_tag(feature.photo.url(:featured), :border => 0, class: 'feature-image'), feature.link_url
+    %h2= link_to "#{feature.name}", feature.link_url
+    %p= feature.body
+    = link_to feature.link_name, feature.link_url, :class => "feature-button"
+    - if current_user and current_user.is_admin?
+      %hr
+      %p= link_to "Edit", edit_left_features_path
+    
+= render "floodlight_tags/home_page"
+
+=render "pages/instagram_carousal"

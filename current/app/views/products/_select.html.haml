@@ -1,0 +1,1 @@
+= select_tag :subscription_name, options_for_select(@cart.items.uniq.map{|m| [m.as_json['subscription']['subscription_name'],m.as_json['subscription']['subscription_name']] }.uniq)

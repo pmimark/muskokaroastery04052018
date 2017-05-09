@@ -1,0 +1,255 @@
+%script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"}
+%script{:src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"}
+%div
+  .connect_cafe_container
+    %input#add-to-subscription{"data-target" => "#myModal", "data-toggle" => "modal", :type => "submit", :value => "+ SUBSCRIBE", :style=>"font-size:20px;text-align:center;"}/
+#myModal.modal.fade.nyroModalCont{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+        %h2 Subscription Order
+        %h3
+          What would you like to do with your
+          = succeed "?" do
+            %strong 
+            = @product.name
+      #modal-content.modal-body.subscription-start-content
+        #subscription-order-view
+          %ul#subscription-order-options.subscription-order-options
+            %li#subscription-order-new.subscription-order-item.active
+              .subscription-order-item-inner
+                -# - if current_user.present?
+                %input#sb-new-form.subscription-order-radio{:checked => " checked", :name => "addto", :type => "radio", :value => "new"}/
+                %label.label-main{:for => "sb-new-form"} Create a New Subscription
+                / <h3>Create a new subscription with Los Cafeteros Blend. (You will set up the subscription during checkout.)</h3>
+                #subscription-order-subscription-new.subscription-order-subscription-new.subscription-add-existing11{:style => "display: block;"}
+                  = form_tag add_product_to_cart_path(@product), :remote => true, :class => "shop-form purchase",onsubmit: "$('.modal').hide();", :id => "add-to-sub-form" do
+                    .subscription-fields
+                      .subscription-field-name
+                        %label.required.label{:for => "subscription_name"} Name Your Subscription
+                        %div
+                          %input#subscription_name.input-text.required-entry{:maxlength => "30", :name => "subscription_data[subscription_name]", :type => "text"}/
+                        #advice-validate-subscription_name-subscription_period_custom.validation-advice{:style => "display: none;"} This field is required.
+                      .subscription-field-frequency
+                        %label.label.required{:for => "subscription_period"} Choose your frequency
+                        %div
+                          %select#subscription_period.required-entry{:name => "subscription_data[subscription_period]", :onchange => "customOption(jQuery(this).val());"}
+                            %option{:value => ""} Select Your Frequency
+                            %option{:value => "7"} Every Week
+                            %option{:value => "14"} Every 2 Weeks
+                            %option{:value => "21"} Every 3 Weeks
+                            %option{:value => "28"} Every 4 Weeks
+                            %option{:value => "42"} Every 6 Weeks
+                            %option{:value => "56"} Every 8 Weeks
+                            %option{:value => "63"} Every 9 Weeks
+                            -# %option{:value => "-1"} Custom Option
+                        #subscription_period_custom_container.subscription-period-custom{:style => "display:none;"}
+                          Ship this order every
+                          %input#subscription_period_custom.input-text.required-entry.validate-digits-range.digits-range-5-999.qty{:maxlength => "3", :name => "subscription_data[subscription_period_custom]", :type => "text"}/
+                          days
+                          #advice-validate-digits-range-subscription_period_custom.validation-advice{:style => "display: none;"} Please enter a shipping frequency between 5 and 999.
+                        #advice-validate-subscription_period-subscription_period_custom.validation-advice{:style => "display: none;"} This field is required.
+                    .subscription-actions
+                      / = submit_tag "Create subscription"
+                      %input{:name => "subscription_data[subscription_date]", :type=>"hidden",  value: Time.now}
+                      %input{:name => "subscription_data[subscription_status]", :type=>"hidden",  value: "pending"}
+                      %button.button.btn-subs.validation-passed{:onclick => "addToSubscriptionCall('');", :title => "Add to Subscriptiond", :type => "button", id: "add-to-subscription", style: "width:auto;margin-left:390px !important;font-size:14px;"} CREATE SUBSCRIPTION
+                      / %a.action-primary-create-subscription.subscription-order-create{:href => "javascript:void(0);", :title => "Create subscription"}
+                      /   %span
+                      /     %span Create subscription
+                -# - else
+                  / %input#sb-new-form.subscription-order-radio{:checked => " checked", :name => "addto", :onclick => "showAddNew ();", :type => "radio", :value => "new"}/
+                  / %label.label-main{:for => "sb-new-form"} 
+                  /   Create a New Subscription
+                  / / <h3>Create a new subscription with Los Cafeteros Blend. (You will set up the subscription during checkout.)</h3>
+                  / %h6
+                  / Please need to sign in for create a new subscription
+                  / #subscription-order-subscription-new.subscription-order-subscription-new.subscription-add-existing11{:style => "display: block;"}
+                  /   = form_tag user_sessions_path, :action => "create" ,onsubmit: "$('.modal').hide();window.location.reload();", id: "sb-add-to-new-form", :remote => true do
+                  /     .subscription-fields
+                  /       .subscription-field-name
+                  /         %label.required.label{:for => "subscription_name"} Username
+                  /         %div
+                  /           %input#subscription_name.input-text.required-entry{:maxlength => "30", :name => "user_session[username]", :type => "text"}/
+                  /         #advice-validate-subscription_name-subscription_period_custom.validation-advice{:style => "display: none;"} This field is required.
+                  /       .subscription-field-name
+                  /         %label.required.label{:for => "subscription_password"} Password
+                  /         %div
+                  /           %input#subscription_password.input-text.required-entry{:maxlength => "30", :name => "user_session[password]", :type => "text"}/
+                  /         #advice-validate-subscription_name-subscription_period_custom.validation-advice{:style => "display: none;"} This field is required.
+                          
+                          
+                  /     .subscription-actions
+                  /       %button.button.btn-subs.validation-passed{:type => "submit", id: "add-to-subscription", style: "width:auto;margin-left:390px !important;font-size:14px;", onclick: "new_"} Sign In
+                        / %a.action-primary-create-subscription.subscription-order-create{:href => "javascript:void(0);", :title => "Create subscription"}
+                        /   %span
+                        /     %span Create subscription                
+                    
+            %li#subscription-order-subscription
+            - if current_user.present?
+              .subscription-order-item
+                .subscription-order-item-inner
+                  %input#sb-add-to-existing.subscription-order-radio{:name => "addto", :type => "radio", :value => "subscription"}/
+                  %label.label-main{:for => "sb-add-to-existing"} Include to an existing Item
+                  #subscription-order-subscription-list.subscription-add-existing.subscription-add-existing11{:style => "display:none;"}
+                    = form_tag add_product_to_cart_path(@product), :remote => true, :class => "shop-form purchase",onsubmit: "$('.modal').hide();", :id => "add-to-sub-form1" do
+                      .subscription-fields{style:"width:50% !important;margin-top: 2%;"}
+                        = select_tag :subscription_name, options_for_select(@cart.items.uniq.map{|m| [m.as_json['subscription']['subscription_name'],m.as_json['subscription']['subscription_name']] }.uniq),:class=>"subscription_dropdown"
+                      .subscription-actions{style:"margin-top: -8%;" }
+                        %button.button.btn-subs.validation-passed{:type => "submit", id: "add-to-subscription", style: "width:auto;margin-left:390px !important;font-size:14px;", :onclick => "exist_form();"} ADD TO SUBSCRIPTION
+            - else
+              .subscription-order-item
+                .subscription-order-item-inner
+                  %input#sb-add-to-existing.subscription-order-radio{:name => "addto", :type => "radio", :value => "subscription"}/
+                  %label.label-main{:for => "sb-add-to-existing"} Add this Item to an existing subscription
+                  #subscription-order-subscription-list.subscription-add-existing.subscription-add-existing11{:style => "display:none;"}
+                    = form_tag user_sessions_path, :action => "create" ,onsubmit: "$('.modal').hide();window.location.reload();", id: "sb-add-to-new-form", :remote => true do
+                      .subscription-fields
+                        .subscription-field-name{style:"display:inline-block;"}
+                          %label.required.label{:for => "subscription_name"} Username
+                          %div
+                            %input.input-text.required-entry{:maxlength => "30", :name => "user_session[username]", :type => "text", style:"width:285px !important;"}/
+                          #advice-validate-subscription_name-subscription_period_custom.validation-advice{:style => "display: none;"} This field is required.
+                        .subscription-field-name{style:"display:inline-block;float:right;"}
+                          %label.required.label{:for => "subscription_password"} Password
+                          %div
+                            %input#subscription_password.input-text.required-entry{:maxlength => "30", :name => "user_session[password]", :type => "password",style:"width:285px !important;"}/
+                          #advice-validate-subscription_name-subscription_period_custom.validation-advice{:style => "display: none;"} This field is required.
+                          
+                          
+                      .subscription-actions
+                        %button.button.btn-subs.validation-passed{:type => "submit", id: "add-to-subscription", style: "width:auto;margin-left:390px !important;font-size:14px;", onclick: "new_"} Sign In
+            %li#subscription-order-shipment
+            - if current_user.present?
+              .subscription-order-item
+                .subscription-order-item-inner
+                  %input#sb-add-to-existing.subscription-order-radio{:name => "addto", :type => "radio", :value => "subscription"}/
+                  %label.label-main{:for => "sb-add-to-existing"} Ship once with my next subscription delivery
+                  #subscription-order-subscription-list.subscription-add-existing.subscription-add-existing11{:style => "display:none;"}
+                  
+                    .subscription-actions{style:"margin-top: -8%;" }
+                      %button.button.btn-subs.validation-passed{:type => "submit", id: "add-to-subscription", style: "width:auto;margin-left:390px !important;font-size:14px;", :onclick => "$('#add-to-cart-button').click(); $('.modal').hide());"} ADD TO SUBSCRIPTION
+            - else
+              .subscription-order-item
+                .subscription-order-item-inner
+                  %input#sb-ship-once.subscription-order-radio{:name => "addto", :onclick => "showShipment ();", :type => "radio", :value => "shipment"}/
+                  %label.label-main{:for => "sb-ship-once"}
+                    Ship once with my next subscription delivery
+                    %span (this item ships at no additional cost)
+                  #subscription-order-subscription-list.subscription-add-existing.subscription-add-existing11{:style => "display:none;"}
+                    = form_tag user_sessions_path,:validate => true , :action => "create" ,onsubmit: "$('.modal').hide();window.location.reload();", id: "sb-add-to-new-form", :remote => true do
+                      .subscription-fields
+                        .subscription-field-name{style:"display:inline-block;"}
+                          %label.required.label{:for => "subscription_name"} Username
+                          %div
+                            %input#subscription_name.input-text.required-entry{:maxlength => "30", :name => "user_session[username]", :type => "text", style:"width:278px !important;"}/
+                          #advice-validate-subscription_name-subscription_period_custom.validation-advice{:style => "display: none;"} This field is required.
+                        .subscription-field-name{style:"display:inline-block;float:right;"}
+                          %label.required.label{:for => "subscription_password",style:"width:278px !important;"} Password
+                          %div
+                            %input#subscription_password.input-text.required-entry{:maxlength => "30", :name => "user_session[password]", :type => "password"}/
+                          #advice-validate-subscription_name-subscription_period_custom.validation-advice{:style => "display: none;"} This field is required.
+                          
+                          
+                      .subscription-actions
+                        %button.button.btn-subs.validation-passed{:type => "submit", id: "add-to-subscription", style: "width:auto;font-size:14px;    margin-left: 390px", onclick: "login_form();"} Sign In
+          %input{:name => "product[id]", :type => "hidden", :value => "9981"}/
+          %input{:name => "product[qty]", :type => "hidden", :value => "1"}/
+          %input{:name => "product[recurring_option]", :type => "hidden", :value => "1"}/
+          %input{:name => "product[attributes][198]", :type => "hidden", :value => "16"}/
+
+:javascript
+  jQuery(document).ready(function(){
+    jQuery("input[name='addto']").change(function(){
+      jQuery(".subscription-order-item").each(function(){
+          jQuery(this).find(".subscription-order-item-inner").find(".subscription-add-existing11").hide();
+         jQuery(this).removeClass("active");
+      });
+        jQuery(this).parent().parent().addClass("active");
+          jQuery(this).parent().parent().find(".subscription-order-item-inner").find(".subscription-add-existing11").show();
+    });
+  });
+
+  function customOption(i){
+    if (i == -1){
+      $("#subscription_period_custom_container").show();
+    }
+  }
+
+  function addToSubscriptionCall() {
+
+
+    $(".validation-advice").hide();
+    if ($("#subscription_name").val() == ""){
+      $("#advice-validate-subscription_name-subscription_period_custom").show();
+      return false;
+    }
+    else{
+      $("#advice-validate-subscription_name-subscription_period_custom").hide();
+    }
+
+    if ($("#subscription_period").val() == ""){
+      $("#advice-validate-subscription_period-subscription_period_custom").show();
+      return false;
+    }
+    else{
+      $("#advice-validate-subscription_period-subscription_period_custom").hide();
+    }
+
+    if ($("#subscription_period").val() == -1){
+      if ($("#subscription_period_custom").val() == "" || $("#subscription_period_custom").val() < 5){
+        $("#advice-validate-digits-range-subscription_period_custom").show();
+        return false;
+      }
+      else{
+        $("#advice-validate-digits-range-subscription_period_custom").hide();
+      }
+    }
+    
+
+    var formurl = "#{add_product_to_cart_path(@product)}";
+    $.ajax({
+      type : 'POST',
+      dataType: 'script',
+      url : formurl,
+      data : ($('#add-to-cart-form').serialize() + $('#add-to-sub-form').serialize()),
+      success: function (data) {
+        var subname = $("#subscription_name").val();
+        var subhtml = "<option value='"+subname+"'>"+subname+"</option>"
+        $(".subscription_dropdown").append(subhtml);
+      }
+    })
+
+
+     
+    $("#add-to-sub-form").submit();
+    $("#add-to-subscription").click(function(){
+      $('.modal').css('display', 'none');
+    });
+  }
+  function exist_form(){
+    var formurl = "#{add_product_to_cart_path(@product)}";
+    $.ajax({
+      type : 'POST',
+      dataType: 'script',
+      url : formurl,
+      data : ($('#add-to-cart-form').serialize() + $('#add-to-sub-form1').serialize()),
+      success: function (data) {
+      }
+    })
+     $("#add-to-sub-form1").submit();
+  }
+
+
+
+  
+:css
+  .subscription-title {
+      font-family: "museo-slab-n5","museo-slab",serif;
+      font-weight: 500;
+      font-size: 15px;
+      color: #8c6239;
+      margin: 11px 0px;
+  }

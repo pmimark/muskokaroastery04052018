@@ -1,0 +1,23 @@
+$("#order-review").html("<%= escape_javascript(render(:partial => "shopping_cart/order_review")) %>");
+$("#shopping-cart").html("<%= escape_javascript(render(:partial => "layouts/shopping_cart")) %>");
+$(document).ready(function(){
+    $("#update-totals-link").click(function(){
+      var array = [];
+      var obj = $('.qty_review')      
+      for (i = 0; i < obj.length; i++) { 
+        var data = {};
+        data[''+obj[i].id] = obj[i].value  
+        array.push(data);
+      }
+      $.ajax({
+        type:'GET',
+        url: '#{shop_checkout_path}',
+        dataType: 'script',
+        data: $.param({items: array }),
+        success:function(data) {
+          $("#shopping-cart-container").html("#{escape_javascript(render(:partial => "shopping_cart/small_cart"))}");
+          $("#shopping-cart").html("#{escape_javascript(render(:partial => "layouts/shopping_cart"))}");
+        }          
+      });
+    });
+  });

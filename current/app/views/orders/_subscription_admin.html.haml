@@ -1,0 +1,38 @@
+- content_for :title do
+  Latest Subscriptions
+
+%table.admin{ :style => "width: 100%" }
+  %tr
+    %th #
+    %th Name
+    %th Phone
+    %th Email
+    %th Subscription status
+    %th Paid on
+    %th Period
+    %th{ :align => "right" } Total
+    %th
+    %th
+    %th
+
+  - @subscriptions.each do |subscription|
+    %tr{ :class => "#{ cycle("even", "odd") }" }
+      %td= subscription.id
+      %td
+        %b= subscription.name
+      %td= subscription.order.phone
+      %td= link_to "Email", "mailto:#{ subscription.user.try(:email) }"
+      %td= subscription.status
+      %td= subscription.order.purchased_at.strftime("%e %B %Y") unless subscription.order.purchased_at.blank?
+      %td= subscription.period.to_s + " Days"
+      %td{ :align => "right" }
+        %b= subscription.order.total.present? ? "CAD #{number_to_currency subscription.order.total}" : ""
+      %td= link_to 'Show', "subscriptions/#{subscription.id}"
+      %td= link_to 'Edit', edit_subscription_path(subscription)
+      %td= link_to 'Destroy', "subscriptions/#{subscription.id}", data: {:confirm => 'Are you sure?'}, :method => :delete
+%hr
+= paginate @subscriptions
+
+- content_for :sidebar do
+  -#   %p= link_to 'New Order', new_order_path, :class => "feature-button"
+  %p= link_to "Edit Shipping Rates", shipping_rates_path

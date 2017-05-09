@@ -1,0 +1,16 @@
+%td.thumbnail{width: 50 }
+  .cart-item-wrapper
+    = image_tag lineitem.product.photo.url(:shopping_cart), size: "40x40", alt: lineitem.product.name
+%td.product-info
+  .cart-item-wrapper
+    - if lineitem.item_flavour.blank? || lineitem.item_flavour.downcase == "none"
+      %h3=raw "#{ link_to lineitem.item_name, product_path(lineitem.product) }"
+    - else
+      %h3=raw "#{ link_to lineitem.item_name, product_path(lineitem.product) }: #{ lineitem.item_flavour.titleize }"
+    =raw "<strong>#{ lineitem.item_option.titleize }</strong>"
+    = "(#{ lineitem.product.price_alt_txt })"
+%td.quantity{width: 40 }
+  .cart-item-wrapper= lineitem.quantity
+%td.unit-price
+  .cart-item-wrapper
+    = number_to_currency lineitem.item_price
